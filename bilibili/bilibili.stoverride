@@ -1,0 +1,130 @@
+name: Bilibili去广告
+icon: https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/Bilibili.png
+http:
+  mitm:
+    - app.bilibili.com
+    - api.bilibili.com
+    - api.live.bilibili.com
+    - grpc.biliapi.net
+    - www.bilibili.com
+    - m.bilibili.com
+    - live.bilibili.com
+
+  url-rewrite:
+    # 开屏广告
+    - ^http:\/\/upos-sz-static\.bilivideo\.com\/ssaxcode\/\w{2}\/\w{2}\/\w{32}-1-SPLASH - reject-dict
+    - ^http:\/\/[\d\.]+:8000\/v1\/resource\/\w{32}-1-SPLASH - reject-dict
+
+    # 开屏广告
+    - ^https:\/\/(api\.bilibili\.com\/x\/mengqi\/v1\/resource|app\.bilibili\.com\/x\/resource\/peak\/download)\? - reject-dict
+
+    # 满意度调研
+    - ^https:\/\/api\.bilibili\.com\/x\/v2\/dm\/qoe\/show\? - reject-dict
+
+    # 移除搜索中的默认关键词
+    - ^https?:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\.interface\.v1\.Search\/DefaultWords$ - reject
+
+    # 移除搜索中的大家都在搜
+    - ^https?:\/\/api\.vc\.bilibili\.com\/search_svr\/v\d\/Search\/recommend_words - reject-dict
+
+    # 移除动态中的话题
+    - ^https?:\/\/api\.vc\.bilibili\.com\/topic_svr\/v1\/topic_svr - reject-dict
+
+    # 移除动态中的最常访问
+    - ^https?:\/\/api\.vc\.bilibili\.com\/dynamic_svr\/v1\/dynamic_svr\/mix_uplist - reject-dict
+
+    # 直播广告
+    - ^https:\/\/api\.live\.bilibili\.com\/xlive\/e-commerce-interface\/v1\/ecommerce-user\/get_shopping_info\? - reject-dict
+
+    # 屏蔽默认搜索框关键词
+    - ^https:\/\/(app\.bilibili\.com|grpc\.biliapi\.net)\/bilibili\.app\.interface\.v1\.Search\/DefaultWords - reject
+
+    # 流量卡推荐
+    - ^https:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\.view\.v1\.View\/TFInfo$ - reject
+
+    # IP请求、地理位置请求 //api.bilibili.com
+    - ^https:\/\/app\.bilibili\.com\/x\/resource\/ip - reject
+    - ^https:\/\/api\.bilibili\.com\/x\/web-interface\/zone\?jsonp - reject-200
+
+    # 移除视频链接跟踪参数
+    - (^https:\/\/(www|m)\.bilibili\.com\/video\/((BV\w{10})|(av\d{9})))(\/\?.*) $1 302
+
+    # 移除直播间链接跟踪参数
+    - (^https:\/\/live\.bilibili\.com\/\d+)((\?.*)) $1 302
+
+  script:
+    # 移除播放页面视频列表广告
+    - match: ^https:\/\/(grpc\.biliapi\.net|app\.bilibili\.com)\/bilibili\.app\.(view|viewunite)\.v1\.View\/(View|ViewProgress)$
+      name: NoAD
+      type: response
+      require-body: true
+      binary-mode: true
+
+      # 移除评论区广告
+    - match: ^https:\/\/grpc\.biliapi\.net\/bilibili\.main\.community\.reply\.v1\.Reply\/MainList
+      name: NoAD
+      type: response
+      require-body: true
+      binary-mode: true
+
+      # 会员特效弹幕处理
+    - match: ^https:\/\/grpc\.biliapi\.net\/bilibili\.community\.service\.dm\.v1\.DM\/DmSegMobile
+      name: NoAD
+      type: response
+      require-body: true
+      binary-mode: true
+
+      # 移除交互式弹幕
+    - match: ^https:\/\/grpc\.biliapi\.net\/bilibili\.community\.service\.dm\.v1\.DM\/DmView
+      name: NoAD
+      type: response
+      require-body: true
+      binary-mode: true
+
+      # 移除青少年模式弹窗
+    - match: ^https:\/\/grpc\.biliapi\.net\/bilibili\.app\.interface\.v1\.Teenagers\/ModeStatus
+      name: NoAD
+      type: response
+      require-body: true
+      binary-mode: true
+
+      # 移除开屏广告
+    - match: ^https:\/\/app\.bilibili\.com\/x\/v2\/splash\/(brand\/list|event\/list2|list|show)\?
+      name: NoAD
+      type: response
+      require-body: true
+
+      # 移除首页推荐广告
+    - match: ^https:\/\/app\.bilibili\.com\/x\/v2\/feed\/index\?
+      name: NoAD
+      type: response
+      require-body: true
+
+      # 移除右上角活动入口
+    - match: ^https:\/\/app\.bilibili\.com\/x\/resource\/top\/activity\?
+      name: NoAD
+      type: response
+      require-body: true
+
+      # 移除热搜广告
+    - match: ^https:\/\/app\.bilibili\.com\/x\/v2\/search\/square
+      name: NoAD
+      type: response
+      require-body: true
+
+      # 移除观影页广告
+    - match: ^https:\/\/api\.bilibili\.com\/pgc\/page\/(bangumi|cinema\/tab\?)
+      name: NoAD
+      type: response
+      require-body: true
+
+      # 移除直播间广告
+    - match: ^https:\/\/api\.live\.bilibili\.com\/xlive\/app-room\/v1\/index\/getInfoByRoom\?
+      name: NoAD
+      type: response
+      require-body: true
+
+script-providers:
+  NoAD:
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/bilibili/bilibili_plus.js
+    interval: 86400
