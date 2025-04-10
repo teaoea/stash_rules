@@ -1,6 +1,5 @@
 name: bilibili去广告
 desc: 移除bilibili广告，精简bilibili
-icon: https://github.com/teaoea/stash_rules/blob/main/bilibili/bilibili.png
 http:
   mitm:
     - app.bilibili.com
