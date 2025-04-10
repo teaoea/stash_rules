@@ -1,5 +1,6 @@
-name: Bilibili去广告
-icon: https://gitlab.com/lodepuly/iconlibrary/-/raw/main/App_icon/120px/Bilibili.png
+name: bilibili去广告
+desc: 移除bilibili广告，精简bilibili
+icon: https://github.com/teaoea/stash_rules/blob/8ccc2b5a68afb819516c2427d6a2b7b739e58876/bilibili/bilibili.png
 http:
   mitm:
     - app.bilibili.com
