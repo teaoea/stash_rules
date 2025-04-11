@@ -1,0 +1,12 @@
+name: 招商银行去广告
+desc: 移除招行app开屏广告
+rules:
+  - DOMAIN,paas.cmbchina.com,REJECT,no-resolve
+http:
+  mitm:
+    - openapi.paas.cmbchina.com
+  url-rewrite:
+    - ^https:\/\/mbmodule-openapi\.paas\.cmbchina\.com\/graphic\/v2\/module\/graphic url reject-dict
+
+
+
