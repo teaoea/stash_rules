@@ -1,5 +1,6 @@
 name: 招商银行去广告
 desc: 移除招行app开屏广告
+category: 去广告
 rules:
   - DOMAIN,paas.cmbchina.com,REJECT,no-resolve
 http:
