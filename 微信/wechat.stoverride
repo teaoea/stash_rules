@@ -1,0 +1,14 @@
+name: 微信公众号去广告
+desc: 移除公众号中的推广内容
+category: 去广告
+rules:
+  - DOMAIN,wxsnsdy.wxs.qq.com,REJECT
+  - DOMAIN,wxsnsdythumb.wxs.qq.com,REJECT
+http:
+  mitm:
+    - mp.weixin.qq.com
+    - "*.wxs.qq.com"
+  url-rewrite:
+    - ^http:\/\/[\d\.]+(:49155)?\/finderpdd\.video\.qq\.com\/\d+\/\d+\/stodownload\? - reject-dict
+    - ^http:\/\/\w+\.wxs\.qq\.com\/\d+\/\d+\/(snscosdownload|snssvpdownload)\/(SH|SZ)\/reserved\/\w+ - reject-dict
+    - ^https:\/\/mp\.weixin\.qq\.com\/mp\/(cps_product_info|getappmsgad|jsmonitor|masonryfeed|relatedarticle)\? - reject-dict
