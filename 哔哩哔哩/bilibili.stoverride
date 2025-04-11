@@ -1,5 +1,6 @@
-name: bilibili去广告
-desc: 移除bilibili广告，精简bilibili
+name: b站去广告
+desc: 移除b站开屏广告
+category: 去广告
 http:
   mitm:
     - app.bilibili.com
