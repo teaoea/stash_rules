@@ -4,9 +4,9 @@ rules:
   - DOMAIN,paas.cmbchina.com,REJECT,no-resolve
 http:
   mitm:
-    - openapi.paas.cmbchina.com
+    - wangdungateway.paas.cmbchina.com
   url-rewrite:
-    - ^https:\/\/mbmodule-openapi\.paas\.cmbchina\.com\/graphic\/v2\/module\/graphic url reject-dict
+    - ^https:\/\/wangdungateway\.paas\.cmbchina\.com\/graphic\/v2\/module\/graphic url reject-dict
 
 
 
