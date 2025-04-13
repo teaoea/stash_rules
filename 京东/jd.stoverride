@@ -7,4 +7,4 @@ http:
   mitm:
     - dns.jd.com
   url-rewrite:
-    - ^https:\/\/dns.jd.com - reject
+    - ^https:\/\/dns\.jd\.com\ - reject
