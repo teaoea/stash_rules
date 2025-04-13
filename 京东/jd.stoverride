@@ -2,11 +2,11 @@ name: 京东去广告
 desc: 移除京东开屏广告
 category: 去广告
 rules:
+  - DOMAIN,dns.jd.com,REJECT
   - IP-CIDR,101.124.19.122/32,REJECT,no-resolve
   - IP-CIDR6,2402:db40:5100:1011::5/128,REJECT,no-resolve
 http:
   mitm:
-    - api.m.jd.com
+    - dns.jd.com
   url-rewrite:
-    - ^http:\/\/\w{32}\.jddebug\.com\/diagnose\? - reject
-
+    - ^https:dns.jd.com - reject
