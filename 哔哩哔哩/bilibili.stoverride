@@ -16,7 +16,7 @@ http:
     # 去除搜索中的默认关键词
     - ^https?:\/\/(grpc|app)\.bili(bili\.com|api\.net)\/bilibili\.app\.interface\.v1\.Search\/DefaultWords$ - reject
     # 去除搜索中的大家都在搜
-    #- ^https?:\/\/api\.vc\.bilibili\.com\/search_svr\/v\d\/Search\/recommend_words - reject-dict
+    - ^https?:\/\/api\.vc\.bilibili\.com\/search_svr\/v\d\/Search\/recommend_words - reject-dict
     # 去除动态中的话题
     - ^https?:\/\/api\.vc\.bilibili\.com\/topic_svr\/v1\/topic_svr - reject-dict
     # 去除动态中的最常访问
@@ -112,7 +112,7 @@ http:
       name: 📺 BiliBili.Enhanced.response
       type: response
       require-body: true
-      
+
 script-providers:
   📺 BiliBili.ADBlock.request.json:
     url: https://github.com/BiliUniverse/ADBlock/releases/download/v0.6.17/request.bundle.js
